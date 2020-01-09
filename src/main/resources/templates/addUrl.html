@@ -11,7 +11,28 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 <body>
+<div id="app"></div>
+<script>
+    var wizards = ['Hermione', 'Neville', 'Gandalf', 'Radagast'];
 
+    // Create an unordered list
+    var list = document.createElement('ul');
+
+    // Create a list item for each wizard
+    // and append it to the list
+    wizards.forEach(function (wizard) {
+        var li = document.createElement('li');
+        li.textContent = wizard;
+        list.appendChild(li);
+    });
+
+    // Log
+    console.log(list);
+
+    // Inject into the DOM
+    var app = document.querySelector('#app');
+    app.appendChild(list);
+</script>
 <div>
     <br/>
     <form action="/add"  method="POST" enctype="utf8"  name="updateForm" >
