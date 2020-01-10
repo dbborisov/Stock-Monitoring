@@ -36,7 +36,7 @@ public class HomeController {
         List<String> list = new ArrayList<>();
         try {
             for (int i = 0; i < webReadService.getList().size(); i++) {
-                doc = this.webReadService.readWeb(webReadService.getList().get(i));
+                doc = this.webReadService.readWeb(webReadService.getList().get(i).getUrl());
                 list.add(doc);
             }
 
