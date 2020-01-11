@@ -4,53 +4,54 @@
         xmlns="http://www.w3.org/1999/xhtml"
         xmlns:th="http://www.thymeleaf.org"
 >
-<head>
-    <meta charset="UTF-8">
-<!--    <meta http-equiv="refresh" content="3"/>-->
-    <title>Home</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-</head>
+<th:block th:include="/imports/head"/>
+
 <body>
-<div id="app"></div>
-<script>
-    var wizards = ['Hermione', 'Neville', 'Gandalf', 'Radagast'];
 
-    // Create an unordered list
-    var list = document.createElement('ul');
+<th:block th:include="imports/navBar"/>
 
-    // Create a list item for each wizard
-    // and append it to the list
-    wizards.forEach(function (wizard) {
-        var li = document.createElement('li');
-        li.textContent = wizard;
-        list.appendChild(li);
-    });
+<!--<div id="app"></div>-->
+<!--<script>-->
+<!--    var wizards = ['Hermione', 'Neville', 'Gandalf', 'Radagast'];-->
 
-    // Log
-    console.log(list);
+<!--    // Create an unordered list-->
+<!--    var list = document.createElement('ul');-->
 
-    // Inject into the DOM
-    var app = document.querySelector('#app');
-    app.appendChild(list);
-</script>
-<div>
-    <br/>
-    <form action="/add"  method="POST" enctype="utf8"  name="updateForm" >
-        <div>
+<!--    // Create a list item for each wizard-->
+<!--    // and append it to the list-->
+<!--    wizards.forEach(function (wizard) {-->
+<!--        var li = document.createElement('li');-->
+<!--        li.textContent = wizard;-->
+<!--        list.appendChild(li);-->
+<!--    });-->
 
-            <label>Url</label><br/>
-            <input type="text" tvalue="${model.url}" name = "url" />
-        </div>
-<!--        <div>-->
+<!--    // Log-->
+<!--    console.log(list);-->
 
-<!--            <label >email</label>-->
-<!--            <input  th:field="*{email}" type="email" class="form-control" required="true"/>-->
-<!--        </div>-->
-        <br/>
-        <button  type="submit" class="btn btn-lg btn-primary btn-block">submit</button>
-    </form>
+<!--    // Inject into the DOM-->
+<!--    var app = document.querySelector('#app');-->
+<!--    app.appendChild(list);-->
+<!--</script>-->
+<div class="container">
+
+    <div class="col-sm-4">
+
+        <form action="/add" method="POST" enctype="utf8" name="updateForm">
+            <div class="col">
+
+                <label>Url</label>
+                <input type="text" tvalue="${model.url}" name="Full URL Path to web page"/>
+            </div>
+            <!--        <div>-->
+            <!--            <label >email</label>-->
+            <!--            <input  th:field="*{email}" type="email" class="form-control" required="true"/>-->
+            <!--        </div>-->
+            <br/>
+            <button type="submit" class="btn btn-lg btn-primary btn-block">submit</button>
+        </form>
+    </div>
 </div>
-<!---->
-
 </body>
+
+
 </html>

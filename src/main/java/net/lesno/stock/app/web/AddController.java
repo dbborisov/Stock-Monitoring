@@ -34,4 +34,9 @@ public class AddController {
 
         return "redirect:/";
     }
+    @GetMapping("/test")
+    private ModelAndView test(){
+
+        return  new ModelAndView("login");
+    }
 }
