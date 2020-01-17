@@ -1,0 +1,47 @@
+<html
+        lang="en"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
+>
+<th:block th:include="fragments/head"/>
+<body>
+<th:block th:include="fragments/time"/>
+<th:block th:include="fragments/nav"/>
+<title>Read Web Page</title>
+
+
+<div class = "container" id = "test">
+    <h1>Helllo</h1>
+    <input id="first" value="Enter HTTP page">
+    <button class="submit"> submit</button>
+
+    <script>
+        var idRest;
+
+        $(document).ready(function(){
+
+            $("button").click(function(){
+                idRest = document.getElementById("first").value;
+                console.log(idRest);
+                $.post("http://localhost:8080/one/page/",
+                    {
+                        name: idRest,
+
+                    },
+                    function(data,status){
+                        // alert("Data: " + data.response + "\nStatus: " + status);
+                        document.getElementById("test").innerHTML = data.response;
+                    });
+            });
+        });
+    </script>
+
+    <div class="container" id="pa"></div>
+
+
+
+</div>
+
+
+</body>
+</html>

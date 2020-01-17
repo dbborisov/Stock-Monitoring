@@ -7,7 +7,10 @@ import java.util.List;
 
 public interface WebReadService {
 
-    String readWeb(String url) throws IOException;
+    String readWeb(String url) ;
+    String readWebAll(String url);
     void add(String url);
     List<Stock> getList();
+
+    Stock findOneById(Long id);
 }

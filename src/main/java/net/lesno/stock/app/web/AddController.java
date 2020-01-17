@@ -34,4 +34,12 @@ public class AddController {
 
         return "redirect:/";
     }
+
+    @PostMapping("/actions")
+    private String setActions(@ModelAttribute WebModelPost model) {
+
+        this.webReadService.add(model.getUrl());
+
+        return "redirect:/";
+    }
 }

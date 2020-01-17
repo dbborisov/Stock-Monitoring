@@ -4,84 +4,116 @@
         xmlns="http://www.w3.org/1999/xhtml"
         xmlns:th="http://www.thymeleaf.org"
 >
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="4"/>
-    <title>Home</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-</head>
+<th:block th:include="fragments/head"/>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand " href="/home"><img src="img/logoTest.jpg" style="background-size:0%;" alt="adhoc logo"></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse text-right flex-grow-1" id="navbarSupportedContent">
-        <ul class="navbar-nav ml-auto flex-nowrap">
-            <li class="nav-item active">
-                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/add">Add</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/api/all">Restcontroller</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">About Us</a>
-            </li>
-        </ul>
-
-    </div>
-
-</nav>
-<h1>OK</h1>
+<th:block th:include="fragments/time"/>
+<th:block th:include="fragments/nav"/>
 
 <div >
 <!--    <div  th:utext="${view}"></div>-->
+
+
 
     <div id = "output">
         <style>.card{
             margin: 12px 10px;
         }</style>
-<!--            <div class="card">-->
-<!--                <div class="card-header">-->
-<!--                    Featured-->
-<!--                </div>-->
-<!--                <div class="card-body">-->
-<!--                    <h5 class="card-title">Special title treatment</h5>-->
-<!--                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>-->
-<!--                    <a href="#" class="btn btn-primary">Go somewhere</a>-->
-<!--                </div>-->
+
             </div>
     </div>
     <script th:inline="javascript">
         /*<![CDATA[*/
 
         var message = /*[[${view}]]*/ 'default';
-        console.log(message);
+
         let render = document.createElement("div");
-        let id = 0;
+
         render.className = "row"
         message.forEach(function (messageKey) {
             var doc = document.createElement("div");
             doc.className = "card col-2";
-            doc.id = id;
+
             var heder = document.createElement("div");
-            heder.className = "card-header ";
+
             heder.innerHTML = messageKey;
+            heder.className = "card-header id-"+ heder.querySelector("div").id;
+
+            var body = document.createElement("div");
+            body.className= "card-body";
+
+            var stocName = heder.querySelector(".company__ticker").textContent;
+            var p = document.createElement("p");
+            p.className = "card-text";
+            p.innerHTML = "Some Text";
+            var allElements = heder.querySelectorAll(".column--full");
+
+            body.appendChild(p);
+
+
+            var a = document.createElement("a");
+            a.className = "btn btn-primary";
+            a.href = `https://finance.yahoo.com/quote/${stocName}/`;
+            a.target = "_blank";
+            a.text = "View in YahooStock";
+            body.appendChild(a);
+
+            var objectInput = document.createElement("div");
+            objectInput.className="row";
+            var div1 = document.createElement("div");
+            div1.className ="col-md-2";
+            var div2 = document.createElement("div");
+
+            div2.className ="col-md-2";
+            var input = document.createElement("input");
+
+            var buttInput = document.createElement("button");
+            buttInput.className="col-md-6";
+            // console.log( heder.querySelector("div").id);
+            input.className = "refresh-input" ;
+            input.name = heder.querySelector("div").id;
+            // console.log(input);
+            buttInput.className = "refresh-input-button";
+            buttInput.name = heder.querySelector("div").id;
+            buttInput.textContent = "interval";
+            buttInput.name = heder.querySelector("div").id;
+            buttInput.setAttribute("onclick","myFunction("+ heder.querySelector("div").id+")");
+            div1.appendChild(input);
+            div2.appendChild(buttInput);
+            objectInput.appendChild(input);
+            objectInput.appendChild(buttInput);
+            body.appendChild(objectInput);
+
+
+
+
             doc.appendChild(heder);
+
+            doc.appendChild(body);
             render.appendChild(doc);
-            id++;
+
         });
-        console.log(render)
+
         document.querySelector("#output").appendChild(render);
 
         /*]]>*/
 
     </script>
-    </div>
+<script>
+    var temp;
+
+    function myFunction(id){
+
+        console.log(id);
+        $.get("http://localhost:8080/one/"+id, function(data, status){
+          var hedder = document.querySelector(".id-"+id);
+          hedder.innerHTML = data.response + "Ok";
+
+          //.querySelector(".card-"+id)
+        // .querySelector("#"+id).innerHTML = data.response;
+            // alert("Data: " + data.response + "\nStatus: " + status);
+        });
+    };
+</script>
 
 </body>
 </html>

@@ -7,32 +7,17 @@
 <head>
     <meta charset="UTF-8">
 <!--    <meta http-equiv="refresh" content="3"/>-->
-    <title>Home</title>
+    <title>AddWeb</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+
 </head>
 <body>
-<div id="app"></div>
-<script>
-    var wizards = ['Hermione', 'Neville', 'Gandalf', 'Radagast'];
+<th:block th:include="fragments/nav"/>
 
-    // Create an unordered list
-    var list = document.createElement('ul');
-
-    // Create a list item for each wizard
-    // and append it to the list
-    wizards.forEach(function (wizard) {
-        var li = document.createElement('li');
-        li.textContent = wizard;
-        list.appendChild(li);
-    });
-
-    // Log
-    console.log(list);
-
-    // Inject into the DOM
-    var app = document.querySelector('#app');
-    app.appendChild(list);
-</script>
 <div>
     <br/>
     <form action="/add"  method="POST" enctype="utf8"  name="updateForm" >
@@ -50,7 +35,51 @@
         <button  type="submit" class="btn btn-lg btn-primary btn-block">submit</button>
     </form>
 </div>
+
+<div class="container">
+
+    <input th:type="text"  id="some" />
+    <button class="find">Click me</button>
+<div class="container" id = "pa"></div>
+
+
+</div>
+
+<script>
+    var idRest;
+
+    $(".find").click(function(){
+        idRest = document.getElementById("some").value;
+        console.log(idRest);
+        $.get("http://localhost:8080/one/"+idRest, function(data, status){
+             document.getElementById("pa").innerHTML = data.response
+            // alert("Data: " + data.response + "\nStatus: " + status);
+        });
+    });
+</script>
 <!---->
 
+<!--<div ng-app="myApp" ng-controller="myCtrl">-->
+
+<!--    <p>Today's welcome message is:</p>-->
+
+<!--    <h1>{{myWelcome}}</h1>-->
+
+<!--</div>-->
+
+<!--<p>The $http service requests a page on the server, and the response is set as the value of the "myWelcome" variable.</p>-->
+
+<!--<script>-->
+<!--    var app = angular.module('myApp', []);-->
+<!--    app.controller('myCtrl', function($scope, $http) {-->
+<!--        $http.get("http://localhost:8080/one/1")-->
+<!--            .then(function(response) {-->
+<!--                $scope.myWelcome = response.data;-->
+<!--            });-->
+<!--    });-->
+<!--//  </script>-->
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 </body>
 </html>
