@@ -31,7 +31,7 @@
         render.className = "row"
         message.forEach(function (messageKey) {
             var doc = document.createElement("div");
-            doc.className = "card col-2";
+            doc.className = "card col-3";
 
             var heder = document.createElement("div");
 
@@ -44,10 +44,11 @@
             var stocName = heder.querySelector(".company__ticker").textContent;
             var p = document.createElement("p");
             p.className = "card-text";
-            p.innerHTML = "Some Text";
+            p.innerHTML = new Date().toLocaleTimeString();
             var allElements = heder.querySelectorAll(".column--full");
 
-            body.appendChild(p);
+            // body.appendChild(p);
+            heder.appendChild(p)
 
 
             var a = document.createElement("a");
@@ -77,6 +78,9 @@
             buttInput.textContent = "interval";
             buttInput.name = heder.querySelector("div").id;
             buttInput.setAttribute("onclick","myFunction("+ heder.querySelector("div").id+")");
+
+
+
             div1.appendChild(input);
             div2.appendChild(buttInput);
             objectInput.appendChild(input);
@@ -102,11 +106,12 @@
     var temp;
 
     function myFunction(id){
+        var url = window.location.href;
+        console.log(url );
 
-        console.log(id);
-        $.get("http://localhost:8080/one/"+id, function(data, status){
+        $.get(url+"one/"+id, function(data, status){
           var hedder = document.querySelector(".id-"+id);
-          hedder.innerHTML = data.response + "Ok";
+          hedder.innerHTML = data.response + new Date().toLocaleTimeString();
 
           //.querySelector(".card-"+id)
         // .querySelector("#"+id).innerHTML = data.response;

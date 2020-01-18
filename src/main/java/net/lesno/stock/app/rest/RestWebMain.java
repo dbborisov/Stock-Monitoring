@@ -1,9 +1,7 @@
 package net.lesno.stock.app.rest;
 
 
-import com.viber.bot.Request;
-import com.viber.bot.api.ViberBot;
-import com.viber.bot.profile.BotProfile;
+
 import net.lesno.stock.entitys.model.Stock;
 import net.lesno.stock.services.services.WebReadService;
 import org.codehaus.jettison.json.JSONObject;

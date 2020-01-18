@@ -43,6 +43,7 @@ public class WebReadImpl implements WebReadService {
 
 
         docCustomConn.getElementsByClass("scroll-top").remove();
+        docCustomConn.getElementsByClass("timestamp__type").remove();
 
 //        Elements allElements = docCustomConn.getAllElements();
 //        System.out.println(allElements);

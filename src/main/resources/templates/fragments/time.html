@@ -1,3 +1,4 @@
-<div ng-app="time" ng-controller="myCtrl">
-    <h1>{{theTime }} </h1>
+<div class="date_time" ng-app="time" ng-controller="myCtrl">
+    <p> {{theTime | date:'dd MMM yyyy  София : HH:mm ' }} </p>
+    <p> {{theTime | date:'dd MMM yyyy  HH:mm  a zzzz' }} </p>
 </div>
