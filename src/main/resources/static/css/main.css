@@ -1,0 +1,14 @@
+.card{
+    font-size: 1em !important;
+    margin: 12px 10px;
+}
+
+
+.main-card {
+    margin: 20px 20px;
+    border: black  2px;
+}
+.company__ticker{
+   border: aqua dashed medium;
+
+}

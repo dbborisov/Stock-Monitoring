@@ -44,6 +44,9 @@ public class WebReadImpl implements WebReadService {
 
         docCustomConn.getElementsByClass("scroll-top").remove();
         docCustomConn.getElementsByClass("timestamp__type").remove();
+        docCustomConn.getElementsByClass("company__market").remove();
+        docCustomConn.getElementsByClass("table__cell fixed-to-top positive").remove();
+        docCustomConn.getElementsByClass("table__cell fixed-to-top negative").remove();
 
 //        Elements allElements = docCustomConn.getAllElements();
 //        System.out.println(allElements);
@@ -60,8 +63,8 @@ public class WebReadImpl implements WebReadService {
         Document Conn = null;
         try {
             setTrustAllCerts();
-            Conn = Jsoup.connect(url)//.cookie("Yahoo","B=16iuplpf205jg&b=3&s=oe; path=/; domain=.yahoo.com; Expires=Fri, 15 Jan 2021 07:53:20 GMT;")
-                    .userAgent("Jsoup client")
+            Conn = Jsoup.connect(url)
+                    .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36")
                     .timeout(7000).get();
 
         } catch (IOException e) {

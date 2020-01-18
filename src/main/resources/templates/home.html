@@ -6,7 +6,7 @@
 >
 <th:block th:include="fragments/head"/>
 <body>
-<th:block th:include="fragments/time"/>
+
 <th:block th:include="fragments/nav"/>
 
 <div >
@@ -15,9 +15,6 @@
 
 
     <div id = "output">
-        <style>.card{
-            margin: 12px 10px;
-        }</style>
 
             </div>
     </div>
@@ -28,15 +25,15 @@
 
         let render = document.createElement("div");
 
-        render.className = "row"
+        render.className = "main-card row"
         message.forEach(function (messageKey) {
             var doc = document.createElement("div");
-            doc.className = "card col-3";
+            doc.className = "card";
 
             var heder = document.createElement("div");
 
             heder.innerHTML = messageKey;
-            heder.className = "card-header id-"+ heder.querySelector("div").id;
+            heder.className = "card-header overflow-auto id-"+ heder.querySelector("div").id;
 
             var body = document.createElement("div");
             body.className= "card-body";
@@ -58,29 +55,51 @@
             a.text = "View in YahooStock";
             body.appendChild(a);
 
-            var objectInput = document.createElement("div");
+            let objectInput = document.createElement("div");
             objectInput.className="row";
-            var div1 = document.createElement("div");
+            let div1 = document.createElement("div");
             div1.className ="col-md-2";
-            var div2 = document.createElement("div");
+            let div2 = document.createElement("div");
 
             div2.className ="col-md-2";
-            var input = document.createElement("input");
+            let input = document.createElement("input");
 
-            var buttInput = document.createElement("button");
+            let buttInput = document.createElement("button");
             buttInput.className="col-md-6";
             // console.log( heder.querySelector("div").id);
+            let id = heder.querySelector("div").id;
             input.className = "refresh-input" ;
-            input.name = heder.querySelector("div").id;
+            input.name = id;
+            input.setAttribute("size","5")
             // console.log(input);
             buttInput.className = "refresh-input-button";
-            buttInput.name = heder.querySelector("div").id;
+            buttInput.name = id;
             buttInput.textContent = "interval";
-            buttInput.name = heder.querySelector("div").id;
-            buttInput.setAttribute("onclick","myFunction("+ heder.querySelector("div").id+")");
+            buttInput.name = id;
+            buttInput.setAttribute("onclick","myFunction("+ id +")");
+            let scripClick = document.createElement("script");
+            scripClick.innerHTML =
+            "setInterval(function ()\n" +
+            "            {\n" +
+
+            "                if (document.getElementById('customSwitch"+id+"').checked)\n" +
+            "                {\n" +
+            "                    myFunction("+ id +");\n" +
+            "                }\n" +
+            "            }, time = 3000);"
+            let switcher= document.createElement("div");
+            switcher.className="custom-control custom-switch";
+            switcher.innerHTML=" <input type=\"checkbox\" class=\"custom-control-input\" id=\"customSwitch"+ id +"\">\n" +
+                "  <label class=\"custom-control-label\" for=\"customSwitch"+ id +"\">Auto Refresh in 3 sec</label>\n";
 
 
+                // "<div class=\"custom-control custom-switch\">\n" +
+                // "  <input type=\"checkbox\" class=\"custom-control-input\" id=\"customSwitch"+ id +"\">\n" +
+                // "  <label class=\"custom-control-label\" for=\"customSwitch"+ id +"\">Auto Refresh in 3 sec</label>\n" +
+                // "</div>";
 
+            objectInput.appendChild(switcher);
+            objectInput.appendChild(scripClick);
             div1.appendChild(input);
             div2.appendChild(buttInput);
             objectInput.appendChild(input);
@@ -91,7 +110,6 @@
 
 
             doc.appendChild(heder);
-
             doc.appendChild(body);
             render.appendChild(doc);
 
@@ -103,21 +121,20 @@
 
     </script>
 <script>
-    var temp;
 
     function myFunction(id){
-        var url = window.location.href;
-        console.log(url );
+        const url = window.location.href;
+        // console.log(url );
 
         $.get(url+"one/"+id, function(data, status){
-          var hedder = document.querySelector(".id-"+id);
+          let hedder = document.querySelector(".id-"+id);
           hedder.innerHTML = data.response + new Date().toLocaleTimeString();
-
+          console.log(hedder.querySelector(".intraday__data .intraday__price .value").textContent * 100)
           //.querySelector(".card-"+id)
         // .querySelector("#"+id).innerHTML = data.response;
             // alert("Data: " + data.response + "\nStatus: " + status);
         });
-    };
+    }
 </script>
 
 </body>

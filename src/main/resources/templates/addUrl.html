@@ -46,12 +46,13 @@
 </div>
 
 <script>
-    var idRest;
+    let idRest;
 
     $(".find").click(function(){
+        const url = window.location.href;
         idRest = document.getElementById("some").value;
         console.log(idRest);
-        $.get("http://localhost:8080/one/"+idRest, function(data, status){
+        $.get(url+"/one/"+idRest, function(data, status){
              document.getElementById("pa").innerHTML = data.response
             // alert("Data: " + data.response + "\nStatus: " + status);
         });
