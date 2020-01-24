@@ -36,7 +36,12 @@ public class FileReader {
             String st;
             while ((st = reader.readLine()) != null) {
                 String[] str = st.split("\t");
-                stockMap.put(str[0], Arrays.stream(str).filter(e->!e.equals(str[0])).collect(Collectors.joining(" ")));
+                String name = str[0];
+                String fullName = Arrays.stream(str).filter(e->!e.equals(str[0])).collect(Collectors.joining(" "));
+                if(fullName.trim().equals("")){
+                    fullName = name;
+                }
+                stockMap.put(name, fullName);
             }
 
 //                System.out.println(stockMap);

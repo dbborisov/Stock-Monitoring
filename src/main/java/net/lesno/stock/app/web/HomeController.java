@@ -18,6 +18,7 @@ public class HomeController {
     private final RevolutStockServiceImpl revolutStockService;
 
 
+
     @Autowired
     public HomeController(WebReadService webReadService, List<Object> objectList, RevolutStockServiceImpl revolutStockService) {
         this.webReadService = webReadService;
@@ -29,33 +30,33 @@ public class HomeController {
     @GetMapping("/")
 //    @ResponseBody
     private ModelAndView getHome() {
-        String doc = "";
+
         objectList = new ArrayList<>();
 //        revolutStockService.seedInDB("some");
 
-            for (int i = 0; i < webReadService.getList().size(); i++) {
-                StringBuilder sb = new StringBuilder();
-                String str = webReadService.getList().get(i).getId()+"";
-                sb.append(String.format("<div id = %s class = card-%s >",str,str)+"</div>");
-                try {
-                    sb.append( this.webReadService.readWeb(webReadService.getList().get(i).getUrl()));
-                }catch (Exception e){
-                    e.printStackTrace();
-                    sb.append("<div class = \"company__ticker\"No_Data</div>");
-                }
-
-
-//                System.out.println(sb.toString());
-                if(sb.toString().trim().equals("")){
-                    sb.append("No_Data");
-                }
-                objectList.add(sb.toString());
-
-            }
+//            for (int i = 0; i < webReadService.getList().size(); i++) {
+//                StringBuilder sb = new StringBuilder();
+//                String str = webReadService.getList().get(i).getId()+"";
+//                sb.append(String.format("<div id = %s class = card-%s >",str,str)+"</div>");
+//                try {
+//                    sb.append( this.webReadService.readWeb(webReadService.getList().get(i).getUrl()));
+//                }catch (Exception e){
+//                    e.printStackTrace();
+//                    sb.append("<div class = \"company__ticker\">No_Data</div>");
+//                }
+//
+//
+////                System.out.println(sb.toString());
+//                if(sb.toString().trim().equals("")){
+//                    sb.append("No_Data");
+//                }
+//                objectList.add(sb.toString());
+//
+//            }
 
 
         ModelAndView modelAndView = new ModelAndView("home");
-        modelAndView.addObject("view",objectList);
+        modelAndView.addObject("view",webReadService.getList());
 
         return modelAndView;
     }

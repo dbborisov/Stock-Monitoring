@@ -4,14 +4,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@NoArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
-public class RevolutStockServiceModel extends BaseServiceModel{
-
+public class StockNameAndPriceModel {
     private String name;
     private String fullName;
     private String price;
-
-
 }

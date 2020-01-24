@@ -2,6 +2,7 @@ package net.lesno.stock.services.services.imp;
 
 import net.lesno.stock.entitys.model.Stock;
 import net.lesno.stock.entitys.repository.StockRepository;
+import net.lesno.stock.services.model.StockNameAndPriceModel;
 import net.lesno.stock.services.services.WebReadService;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -37,7 +38,7 @@ public class WebReadImpl implements WebReadService {
                     .get();
         } catch (Exception e) {
             e.printStackTrace();
-            return "<div class = \"company__ticker\"No_Data</div>";
+            return "<div class = \"company__ticker\">No_Data</div>";
 
         }
 
@@ -53,6 +54,35 @@ public class WebReadImpl implements WebReadService {
 //        System.out.println(docCustomConn.getElementsByClass("element element--intraday").html());
         //        System.out.println(docCustomConn.html().replaceAll("(</)*html(>)*",""));
         return docCustomConn.getElementsByClass("element element--intraday").html();
+
+
+//        return docCustomConn.html().replaceAll("(</)*html(>)*","").replaceAll("(</)*body(>)*","");
+    }
+    @Override
+    public String readWebPrice(String url) {
+        Document docCustomConn = null;
+        try {
+            setTrustAllCerts();
+            docCustomConn = Jsoup.connect(url)
+                    .userAgent("Jsoup client")
+                    .timeout(3000).ignoreHttpErrors(true)
+                    //                .cookie("cookiename", "val234").cookie("anothercookie", "ilovejsoup").referrer("http://google.com").header("headersecurity", "xyz123")
+
+                    .get();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "<div class = \"company__ticker\">No_Data</div>";
+
+        }
+
+
+
+
+//        Elements allElements = docCustomConn.getAllElements();
+//        System.out.println(allElements);
+//        System.out.println(docCustomConn.getElementsByClass("element element--intraday").html());
+        //        System.out.println(docCustomConn.html().replaceAll("(</)*html(>)*",""));
+        return docCustomConn.select(".intraday__data .intraday__price .value").html();
 
 
 //        return docCustomConn.html().replaceAll("(</)*html(>)*","").replaceAll("(</)*body(>)*","");
@@ -100,7 +130,9 @@ public class WebReadImpl implements WebReadService {
     }
 
 
-    private void setTrustAllCerts() throws Exception {
+
+
+    public void setTrustAllCerts() throws Exception {
         TrustManager[] trustAllCerts = new TrustManager[]{
                 new X509TrustManager() {
                     public java.security.cert.X509Certificate[] getAcceptedIssuers() {

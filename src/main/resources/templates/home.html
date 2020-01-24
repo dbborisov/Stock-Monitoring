@@ -9,133 +9,55 @@
 
 <th:block th:include="fragments/nav"/>
 
-<div >
-<!--    <div  th:utext="${view}"></div>-->
+<audio id="myAudio">
+    <source th:src="@{/audio/Marimba-alert.mp3}" type="audio/mp3">
+
+    Your browser does not support the audio element.
+</audio>
 
 
+<div id="output" class="main-card row"></div>
+<span></span>
 
-    <div id = "output">
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    // let dbUrl =/*[[${view}]]*/ 'default';
+    urls =/*[[${view}]]*/ 'default';
+    /*]]>*/
 
-            </div>
-    </div>
-    <script th:inline="javascript">
-        /*<![CDATA[*/
-
-        var message = /*[[${view}]]*/ 'default';
-
-        let render = document.createElement("div");
-
-        render.className = "main-card row"
-        message.forEach(function (messageKey) {
-            var doc = document.createElement("div");
-            doc.className = "card";
-
-            var heder = document.createElement("div");
-
-            heder.innerHTML = messageKey;
-            heder.className = "card-header overflow-auto id-"+ heder.querySelector("div").id;
-
-            var body = document.createElement("div");
-            body.className= "card-body";
-
-            var stocName = heder.querySelector(".company__ticker").textContent;
-            var p = document.createElement("p");
-            p.className = "card-text";
-            p.innerHTML = new Date().toLocaleTimeString();
-            var allElements = heder.querySelectorAll(".column--full");
-
-            // body.appendChild(p);
-            heder.appendChild(p)
-
-
-            var a = document.createElement("a");
-            a.className = "btn btn-primary";
-            a.href = `https://finance.yahoo.com/quote/${stocName}/`;
-            a.target = "_blank";
-            a.text = "View in YahooStock";
-            body.appendChild(a);
-
-            let objectInput = document.createElement("div");
-            objectInput.className="row";
-            let div1 = document.createElement("div");
-            div1.className ="col-md-2";
-            let div2 = document.createElement("div");
-
-            div2.className ="col-md-2";
-            let input = document.createElement("input");
-
-            let buttInput = document.createElement("button");
-            buttInput.className="col-md-6";
-            // console.log( heder.querySelector("div").id);
-            let id = heder.querySelector("div").id;
-            input.className = "refresh-input" ;
-            input.name = id;
-            input.setAttribute("size","5")
-            // console.log(input);
-            buttInput.className = "refresh-input-button";
-            buttInput.name = id;
-            buttInput.textContent = "interval";
-            buttInput.name = id;
-            buttInput.setAttribute("onclick","myFunction("+ id +")");
-            let scripClick = document.createElement("script");
-            scripClick.innerHTML =
-            "setInterval(function ()\n" +
-            "            {\n" +
-
-            "                if (document.getElementById('customSwitch"+id+"').checked)\n" +
-            "                {\n" +
-            "                    myFunction("+ id +");\n" +
-            "                }\n" +
-            "            }, time = 3000);"
-            let switcher= document.createElement("div");
-            switcher.className="custom-control custom-switch";
-            switcher.innerHTML=" <input type=\"checkbox\" class=\"custom-control-input\" id=\"customSwitch"+ id +"\">\n" +
-                "  <label class=\"custom-control-label\" for=\"customSwitch"+ id +"\">Auto Refresh in 3 sec</label>\n";
-
-
-                // "<div class=\"custom-control custom-switch\">\n" +
-                // "  <input type=\"checkbox\" class=\"custom-control-input\" id=\"customSwitch"+ id +"\">\n" +
-                // "  <label class=\"custom-control-label\" for=\"customSwitch"+ id +"\">Auto Refresh in 3 sec</label>\n" +
-                // "</div>";
-
-            objectInput.appendChild(switcher);
-            objectInput.appendChild(scripClick);
-            div1.appendChild(input);
-            div2.appendChild(buttInput);
-            objectInput.appendChild(input);
-            objectInput.appendChild(buttInput);
-            body.appendChild(objectInput);
-
-
-
-
-            doc.appendChild(heder);
-            doc.appendChild(body);
-            render.appendChild(doc);
-
-        });
-
-        document.querySelector("#output").appendChild(render);
-
-        /*]]>*/
-
-    </script>
+</script>
 <script>
+    function fatchtest() {
+        return fetch("http://localhost:8080/one/1")
+            .then(function (data) {
+                return data.json()// Here you get the data to modify as you please
+            })
 
-    function myFunction(id){
-        const url = window.location.href;
-        // console.log(url );
-
-        $.get(url+"one/"+id, function(data, status){
-          let hedder = document.querySelector(".id-"+id);
-          hedder.innerHTML = data.response + new Date().toLocaleTimeString();
-          console.log(hedder.querySelector(".intraday__data .intraday__price .value").textContent * 100)
-          //.querySelector(".card-"+id)
-        // .querySelector("#"+id).innerHTML = data.response;
-            // alert("Data: " + data.response + "\nStatus: " + status);
-        });
+            .catch(function (error) {
+                alert("error " + error) // If there is any error you will catch them here
+            });
     }
+
+
+</script>
+<script>
+    readDataFromHost(urls);
+    let x = document.getElementById('myAudio')
 </script>
 
+<!-- Footer -->
+<div class="row">
+    <footer class="footer text-right flex-grow-1">
+
+            <!-- Copyright -->
+            <div class="footer-copyright text-center py-3">© 2020 Copyright:
+                <a href="https://github.com/dbborisov"> Dobromir Borisov</a>
+            </div>
+            <!-- Copyright -->
+
+    </footer>
+    <!-- Footer -->
+</div>
+</div>
 </body>
 </html>
