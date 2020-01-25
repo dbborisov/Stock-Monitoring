@@ -30,7 +30,7 @@ public class WebReadImpl implements WebReadService {
         Document docCustomConn = null;
         try {
             setTrustAllCerts();
-            docCustomConn = Jsoup.connect(url)
+            docCustomConn = Jsoup.connect(url).followRedirects(true)
                     .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36")
                     .timeout(3000).ignoreHttpErrors(true)
                     //                .cookie("cookiename", "val234").cookie("anothercookie", "ilovejsoup").referrer("http://google.com").header("headersecurity", "xyz123")
@@ -49,21 +49,18 @@ public class WebReadImpl implements WebReadService {
         docCustomConn.getElementsByClass("table__cell fixed-to-top positive").remove();
         docCustomConn.getElementsByClass("table__cell fixed-to-top negative").remove();
 
-//        Elements allElements = docCustomConn.getAllElements();
-//        System.out.println(allElements);
-//        System.out.println(docCustomConn.getElementsByClass("element element--intraday").html());
-        //        System.out.println(docCustomConn.html().replaceAll("(</)*html(>)*",""));
+//
         return docCustomConn.getElementsByClass("element element--intraday").html();
 
 
-//        return docCustomConn.html().replaceAll("(</)*html(>)*","").replaceAll("(</)*body(>)*","");
+//
     }
     @Override
     public String readWebPrice(String url) {
         Document docCustomConn = null;
         try {
             setTrustAllCerts();
-            docCustomConn = Jsoup.connect(url)
+            docCustomConn = Jsoup.connect(url).followRedirects(true)
                     .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36")
                     .timeout(3000).ignoreHttpErrors(true)
                     //                .cookie("cookiename", "val234").cookie("anothercookie", "ilovejsoup").referrer("http://google.com").header("headersecurity", "xyz123")
@@ -93,7 +90,7 @@ public class WebReadImpl implements WebReadService {
         Document Conn = null;
         try {
             setTrustAllCerts();
-            Conn = Jsoup.connect(url)
+            Conn = Jsoup.connect(url).followRedirects(true)
                     .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36")
                     .timeout(7000).get();
 
