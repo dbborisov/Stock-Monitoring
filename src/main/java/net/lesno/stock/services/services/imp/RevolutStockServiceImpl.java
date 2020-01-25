@@ -9,6 +9,7 @@ import net.lesno.stock.services.model.StockNameAndPriceModel;
 import net.lesno.stock.services.services.RevolutStockService;
 import net.lesno.stock.services.services.tools.FileReader;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class RevolutStockServiceImpl implements RevolutStockService {
     private final WebReadImpl webRead;
     private final RevolutStokListPriceRepository price;
 
-
+    @Autowired
     public RevolutStockServiceImpl(RevolutStokListRepository stockListRepository, ModelMapper modelMapper, WebReadImpl webRead, RevolutStokListPriceRepository price) {
         this.stokListRepository = stockListRepository;
         this.modelMapper = modelMapper;
@@ -39,7 +40,7 @@ public class RevolutStockServiceImpl implements RevolutStockService {
         FileReader reader = new FileReader();
         Map<String, String> stringMap = reader.readFileToMap("C:\\CCB\\all_stocks.txt");
         List<RevolutStockList> revolutStockLists = new ArrayList<>();
-        stringMap.entrySet().forEach((k)-> {
+        stringMap.entrySet().forEach((k) -> {
             RevolutStockList revolutStockList = new RevolutStockList();
             revolutStockList.setName(k.getKey());
             revolutStockList.setFullName(k.getValue());
@@ -55,31 +56,54 @@ public class RevolutStockServiceImpl implements RevolutStockService {
     }
 
     @Override
-    public List<StockNameAndPriceModel> allStokAndPriceUpdate() {
-        List<StockNameAndPriceModel> returnList = new ArrayList<>();
-        List<RevolutStockList> all = this.stokListRepository.findAll();
-        int size = all.size()-1;
-        while (size > 0){
-            StockNameAndPriceModel stockNameAndPriceModel = new StockNameAndPriceModel();
-            stockNameAndPriceModel.setName(all.get(size).getName()); ;
-            String stokReadet = this.webRead.readWebPrice("https://www.marketwatch.com/investing/stock/" + all.get(size).getName());
-            stockNameAndPriceModel.setFullName(all.get(size).getFullName());
+    public StockNameAndPriceModel allStokAndPriceUpdate(String name) {
+        RevolutStockList byName = this.stokListRepository.findByName(name).orElse(null);
+
+        if (byName != null) {
+            RevolutStockListPrice byName1 = this.price.getByName(name).orElse(null);
+            if(byName1 !=null)
+            this.price.deleteById(byName1.getId());
+        }
+        StockNameAndPriceModel stockNameAndPriceModel = new StockNameAndPriceModel();
+
+        int count = 3;
+
+        while (count > 0) {
+            stockNameAndPriceModel.setName(name);
+            String stokReadet = this.webRead.readWebPrice("https://www.marketwatch.com/investing/stock/" + name);
+            if (byName != null) {
+                stockNameAndPriceModel.setFullName(byName.getFullName());
+            } else {
+                stockNameAndPriceModel.setFullName(name);
+            }
             System.out.println(stokReadet);
-            if(stokReadet.equals("<div class = \"company__ticker\">No_Data</div>")){
-              continue;
+            if (stokReadet.equals("<div class = \"company__ticker\">No_Data</div>")) {
+                count -= 1;
+                continue;
             }
             stockNameAndPriceModel.setPrice(stokReadet);
-            returnList.add(stockNameAndPriceModel);
+//            returnList.add(stockNameAndPriceModel);
             this.price.save(this.modelMapper.map(stockNameAndPriceModel, RevolutStockListPrice.class));
-            System.out.println("==========================="+ size+"=================");
-            size-=1;
+
+            count -= 1;
         }
 
-        return returnList;
+        return stockNameAndPriceModel;
     }
 
     @Override
     public List<StockNameAndPriceModel> allStokAndPrice() {
-        return this.price.findAll().stream().map(e->this.modelMapper.map(e,StockNameAndPriceModel.class)).collect(Collectors.toList());
+        return this.price.findAll().stream().map(e -> this.modelMapper.map(e, StockNameAndPriceModel.class)).collect(Collectors.toList());
+    }
+
+    public void saveStockPriceByDay(String stockName, String price) {
+
+        RevolutStockList stock = this.stokListRepository.findByName(stockName).get();
+        RevolutStockListPrice stockUpdate = new RevolutStockListPrice();
+        stockUpdate.setName(stock.getName());
+        stockUpdate.setFullName(stock.getFullName());
+        stockUpdate.setPrice(price);
+
+        System.out.println(stock.getName());
     }
 }

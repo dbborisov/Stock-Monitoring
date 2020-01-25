@@ -11,6 +11,7 @@ public interface RevolutStockService  {
     boolean seedInDB (Object stock);
 
     List<RevolutStockList> allStocksInRevolut();
-    List<StockNameAndPriceModel> allStokAndPriceUpdate();
+    StockNameAndPriceModel allStokAndPriceUpdate(String name);
+
     List<StockNameAndPriceModel> allStokAndPrice();
 }

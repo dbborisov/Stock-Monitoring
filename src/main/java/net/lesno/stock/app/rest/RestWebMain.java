@@ -96,11 +96,11 @@ public class RestWebMain {
     }
 
 
-    @GetMapping(path ="/all/prices/update")
-    private Object updatePricesOfStock() {
+    @GetMapping(path ="/all/prices/update/{url}")
+    private Object updatePricesOfStock(@PathVariable String url) {
 
 
-        return this.revolutStockService.allStokAndPriceUpdate();
+        return this.revolutStockService.allStokAndPriceUpdate(url);
     }
     @GetMapping(path ="/all/prices")
     private Object getPricesOfStock() {

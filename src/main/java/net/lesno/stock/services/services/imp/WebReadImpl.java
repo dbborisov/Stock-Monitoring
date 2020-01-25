@@ -31,7 +31,7 @@ public class WebReadImpl implements WebReadService {
         try {
             setTrustAllCerts();
             docCustomConn = Jsoup.connect(url)
-                    .userAgent("Jsoup client")
+                    .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36")
                     .timeout(3000).ignoreHttpErrors(true)
                     //                .cookie("cookiename", "val234").cookie("anothercookie", "ilovejsoup").referrer("http://google.com").header("headersecurity", "xyz123")
 
@@ -64,7 +64,7 @@ public class WebReadImpl implements WebReadService {
         try {
             setTrustAllCerts();
             docCustomConn = Jsoup.connect(url)
-                    .userAgent("Jsoup client")
+                    .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36")
                     .timeout(3000).ignoreHttpErrors(true)
                     //                .cookie("cookiename", "val234").cookie("anothercookie", "ilovejsoup").referrer("http://google.com").header("headersecurity", "xyz123")
 
@@ -163,6 +163,7 @@ public class WebReadImpl implements WebReadService {
             e.printStackTrace();
         }
     }
+
 
 
 }

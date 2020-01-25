@@ -32,29 +32,7 @@ public class HomeController {
     private ModelAndView getHome() {
 
         objectList = new ArrayList<>();
-//        revolutStockService.seedInDB("some");
-
-//            for (int i = 0; i < webReadService.getList().size(); i++) {
-//                StringBuilder sb = new StringBuilder();
-//                String str = webReadService.getList().get(i).getId()+"";
-//                sb.append(String.format("<div id = %s class = card-%s >",str,str)+"</div>");
-//                try {
-//                    sb.append( this.webReadService.readWeb(webReadService.getList().get(i).getUrl()));
-//                }catch (Exception e){
-//                    e.printStackTrace();
-//                    sb.append("<div class = \"company__ticker\">No_Data</div>");
-//                }
-//
-//
-////                System.out.println(sb.toString());
-//                if(sb.toString().trim().equals("")){
-//                    sb.append("No_Data");
-//                }
-//                objectList.add(sb.toString());
-//
-//            }
-
-
+        this.revolutStockService.saveStockPriceByDay("NIO","20");
         ModelAndView modelAndView = new ModelAndView("home");
         modelAndView.addObject("view",webReadService.getList());
 
