@@ -2,7 +2,6 @@ package net.lesno.stock.services.services.imp;
 
 import net.lesno.stock.entitys.model.Stock;
 import net.lesno.stock.entitys.repository.StockRepository;
-import net.lesno.stock.services.model.StockNameAndPriceModel;
 import net.lesno.stock.services.services.WebReadService;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -125,6 +124,7 @@ public class WebReadImpl implements WebReadService {
     public Stock findOneById(Long id) {
         return this.stockRepository.findById(id).get();
     }
+
 
 
 

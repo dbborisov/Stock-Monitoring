@@ -1,9 +1,7 @@
 package net.lesno.stock.services.services;
 
 import net.lesno.stock.entitys.model.Stock;
-import net.lesno.stock.services.model.StockNameAndPriceModel;
 
-import java.io.IOException;
 import java.util.List;
 
 public interface WebReadService {

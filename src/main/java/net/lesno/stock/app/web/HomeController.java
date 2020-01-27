@@ -32,7 +32,7 @@ public class HomeController {
     private ModelAndView getHome() {
 
         objectList = new ArrayList<>();
-        this.revolutStockService.saveStockPriceByDay("NIO","20");
+//        this.revolutStockService.saveStockPriceByDay("NIO","20");
         ModelAndView modelAndView = new ModelAndView("home");
         modelAndView.addObject("view",webReadService.getList());
 
