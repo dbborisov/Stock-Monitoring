@@ -1,5 +1,8 @@
 package net.lesno.stock.services.services.imp;
 
+import com.gargoylesoftware.htmlunit.BrowserVersion;
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import net.lesno.stock.entitys.model.RevolutStockList;
 import net.lesno.stock.entitys.repository.RevolutStokListPriceRepository;
 import net.lesno.stock.entitys.repository.RevolutStokListRepository;
@@ -10,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.net.ssl.*;
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -41,7 +45,7 @@ public class TestWebReadImpl implements TestWebRead {
             e.printStackTrace();
         }
 //        BNeawe iBp4i AP7Wnd nio
-        return docCustomConn.getElementsByClass("BNeawe iBp4i AP7Wnd").html();
+        return docCustomConn.html();
     }
 
     @Override
@@ -60,6 +64,42 @@ public class TestWebReadImpl implements TestWebRead {
         }
 //        BNeawe iBp4i AP7Wnd nio
         return docCustomConn.getElementsByClass("BNeawe iBp4i AP7Wnd").first().html();
+    }
+
+    @Override
+    public String htmlUtilGoogleSearch(String stockName){
+        WebClient client = new WebClient();
+//        client.getOptions().setJavaScriptEnabled(true);
+        HtmlPage page;
+        try {
+
+             page =client.getPage("https://www.google.com/search?q="+stockName+ " price");
+
+
+            return page.asXml();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "Error";
+        }
+
+    }
+
+    @Override
+    public String htmlUtilGoogleSearchOnlyStock(String stockName){
+        WebClient client = new WebClient();
+//        client.getOptions().setJavaScriptEnabled(true);
+        HtmlPage page;
+        try {
+
+            page =client.getPage("https://www.google.com/search?q="+stockName+ " price");
+
+
+            return page.getElementById("rso").asXml();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "Error";
+        }
+
     }
 
     @Override

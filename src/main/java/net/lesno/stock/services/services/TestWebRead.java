@@ -6,8 +6,11 @@ import java.util.List;
 
 public interface TestWebRead {
     String jsoupGoogleSearch(String content);
+
     String jsoupGoogleSearchPrice(String stockName);
-    public List<RevolutStockList> getStockList();
 
+    List<RevolutStockList> getStockList();
 
+    String htmlUtilGoogleSearch(String stockName);
+    public String htmlUtilGoogleSearchOnlyStock(String stockName);
 }

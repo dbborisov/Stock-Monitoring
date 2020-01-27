@@ -18,14 +18,14 @@ public class TestController {
     }
 
 
-    @GetMapping("/test/{name}")
+    @GetMapping("/test/jsoup/{name}")
     private Object testPageWithVariable(@PathVariable String name) {
 
         ModelAndView modelAndView = new ModelAndView("testPage");
         modelAndView.addObject("view", this.testWebRead.jsoupGoogleSearch(name));
         return modelAndView;
     }
-    @GetMapping("/test")
+    @GetMapping("/test/jsoup/")
     private Object testPage() {
 
         ModelAndView modelAndView = new ModelAndView("testPage");

@@ -6,7 +6,7 @@ function loadAllStockfromHost() {
 
     let filtered = [];
     // console.log(inid );
-    $.get("http://" + url + "/test/api/all/", function (data) {
+    $.get("http://" + url + "/test/api/jsoup/all/", function (data) {
         let temp = [];
         // console.log(data)
         for (let i = 0; i < data.length; i++) {
@@ -38,9 +38,9 @@ function getStockPriceGoogle() {
 
     let selected = document.querySelector("select");
     let valSelected = selected.options[selected.selectedIndex].value;
-    const url = window.location.href;
+    const url = window.location.host;
 
-    $.get(url + "/api/" + valSelected, function (data, status) {
+    $.get("http://" +url + "/test/api/jsoup/" + valSelected, function (data, status) {
 
 
         let result = '<div id="' + valSelected + '" class="card-' + valSelected + '">' + data + '</div>';
@@ -60,7 +60,7 @@ function getStockAllPriceGoogle(data) {
     data.forEach(function (valSelected) {
         let name = valSelected.name
 
-        $.get(url + "/api/" + valSelected.name, function (data, status) {
+        $.get(url + "/api/jsoup/" + valSelected.name, function (data, status) {
 
 
             let result = '<div id="' + name + '" class="card-' + name + '">' + data + '</div>';

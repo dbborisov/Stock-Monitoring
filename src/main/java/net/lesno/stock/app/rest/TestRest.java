@@ -18,14 +18,24 @@ public class TestRest {
         this.testWebRead = testWebRead;
     }
 
-    @GetMapping("/test/api/all")
+    @GetMapping("/test/api/jsoup/all")
     public List<RevolutStockList> getListStockName(){
 
       return  this.testWebRead.getStockList();
     }
-    @GetMapping("/test/api/{stockName}")
+
+
+    @GetMapping("/test/api/jsoup/{stockName}")
     public String getListStockName(@PathVariable String stockName){
 
         return  this.testWebRead.jsoupGoogleSearchPrice(stockName);
     }
+
+
+    @GetMapping("/test/api/htmlunit/{stockName}")
+    public String getListStockNameHtmlUnit(@PathVariable String stockName){
+
+        return  this.testWebRead.htmlUtilGoogleSearch(stockName);
+    }
+
 }
