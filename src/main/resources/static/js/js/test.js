@@ -40,7 +40,7 @@ function getStockPriceGoogle() {
     let valSelected = selected.options[selected.selectedIndex].value;
     const url = window.location.host;
 
-    $.get("http://" +url + "/test/api/jsoup/" + valSelected, function (data, status) {
+    $.get("http://" + url + "/test/api/jsoup/" + valSelected, function (data, status) {
 
 
         let result = '<div id="' + valSelected + '" class="card-' + valSelected + '">' + data + '</div>';
@@ -56,11 +56,11 @@ function getStockPriceGoogle() {
 function getStockAllPriceGoogle(data) {
 
 
-    const url = window.location.href;
+    const url = window.location.host;
     data.forEach(function (valSelected) {
         let name = valSelected.name
 
-        $.get(url + "/api/jsoup/" + valSelected.name, function (data, status) {
+        $.get("http://" + url + "/test/api/jsoup/" + valSelected.name, function (data, status) {
 
 
             let result = '<div id="' + name + '" class="card-' + name + '">' + data + '</div>';
@@ -80,7 +80,7 @@ function spliter(data, size = 80) {
         if (i % size === 0 && i !== 0) {
             console.log(i)
             stockArrayBy80.push(temp_list);
-            temp_list =[];
+            temp_list = [];
         }
     }
     stockArrayBy80.push(temp_list);

@@ -130,3 +130,4 @@
     </build>
 
 </project>
+<!--     API https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=NIO&interval=5min&apikey=    49KXBTD3FBBZ3WL2-->

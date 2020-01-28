@@ -73,7 +73,7 @@ public class TestWebReadImpl implements TestWebRead {
         HtmlPage page;
         try {
 
-             page =client.getPage("https://www.google.com/search?q="+stockName+ " price");
+             page =client.getPage("https://www.google.com/search?q="+stockName+ " stock price");
 
 
             return page.asXml();
@@ -91,7 +91,7 @@ public class TestWebReadImpl implements TestWebRead {
         HtmlPage page;
         try {
 
-            page =client.getPage("https://www.google.com/search?q="+stockName+ " price");
+            page =client.getPage("https://www.google.com/search?q="+stockName+ " stock price");
 
 
             return page.getElementById("rso").asXml();
