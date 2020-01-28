@@ -130,4 +130,6 @@
     </build>
 
 </project>
-<!--     API https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=NIO&interval=5min&apikey=    49KXBTD3FBBZ3WL2-->
+<!--     API https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=NIO&interval=5min&apikey=    49KXBTD3FBBZ3WL2 -my
+apikey=QYOWP5SXIHB6BV3X'-->
+<!--  https://cloud.ibm.com/devops/pipelines/e808519c-eb78-420e-9c7f-8dc106507596?env_id=ibm:yp:eu-de      Key will be called:API Key for watson-stock-advisor-20200128122141559-->
