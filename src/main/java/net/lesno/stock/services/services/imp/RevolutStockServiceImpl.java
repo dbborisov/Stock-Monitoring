@@ -102,8 +102,14 @@ public class RevolutStockServiceImpl implements RevolutStockService {
         RevolutStockListPrice stockUpdate = new RevolutStockListPrice();
         stockUpdate.setName(stock.getName());
         stockUpdate.setFullName(stock.getFullName());
-        stockUpdate.setPrice(price);
+//        stockUpdate.setPrice(price);
 
         System.out.println(stock.getName());
     }
+
+    public void getByApiByName(String name){
+
+    }
+
+
 }

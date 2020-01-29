@@ -14,16 +14,33 @@ import java.util.Calendar;
 @Table(name="revolute_stock_list_and_price")
 @Getter
 @Setter
-@NoArgsConstructor
+
 public class RevolutStockListPrice extends BaseModel {
-    @ManyToOne
-    private RevolutStockList revolutStockList;
+    public RevolutStockListPrice() {
+
+    }
+
+
      @Column(name = "name")
     private String name;
      @Column(name = "full_name")
     private String fullName;
-    @Column(name = "price")
-    private String price;
-    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable = false, updatable = false)
+
+    @Column(name = "price_open")
+    private String price_open;
+
+    @Column(name = "price_close")
+    private String price_close;
+
+    @Column(name = "volume")
+    private String volume;
+
+    @Column(name = "high")
+    private String high;
+
+    @Column(name = "low")
+    private String low;
+
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", updatable = false)
     private Calendar createdDate;
 }

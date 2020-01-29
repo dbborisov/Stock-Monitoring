@@ -1,5 +1,6 @@
 package net.lesno.stock.app.web;
 
+import net.lesno.stock.services.services.RestApiService;
 import net.lesno.stock.services.services.TestWebRead;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,10 +12,12 @@ import org.springframework.web.servlet.ModelAndView;
 public class TestController {
 
     private final TestWebRead testWebRead;
+    private final RestApiService restApiService;
 
     @Autowired
-    public TestController(TestWebRead testWebRead) {
+    public TestController(TestWebRead testWebRead, RestApiService restApiService) {
         this.testWebRead = testWebRead;
+        this.restApiService = restApiService;
     }
 
 
@@ -27,11 +30,17 @@ public class TestController {
     }
     @GetMapping("/test/jsoup/")
     private Object testPage() {
-
+        this.testWebRead.makeTest();
         ModelAndView modelAndView = new ModelAndView("testPage");
 
         return modelAndView;
     }
 
+    @GetMapping("/test/htmlunit/{name}")
+    private Object getTestPageHtmlUnitNasdaq(@PathVariable String name) {
+
+
+        return this.restApiService.getPostsPlainJSON();
+    }
 
 }

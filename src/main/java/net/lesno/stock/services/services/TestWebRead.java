@@ -9,8 +9,12 @@ public interface TestWebRead {
 
     String jsoupGoogleSearchPrice(String stockName);
 
+    String htmlUtilStockInNasdaq(String stockName);
+
     List<RevolutStockList> getStockList();
 
     String htmlUtilGoogleSearch(String stockName);
-    public String htmlUtilGoogleSearchOnlyStock(String stockName);
+
+    String htmlUtilGoogleSearchOnlyStock(String stockName);
+    void makeTest();
 }
