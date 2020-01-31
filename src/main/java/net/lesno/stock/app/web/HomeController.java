@@ -30,7 +30,7 @@ public class HomeController {
     @GetMapping("/")
 //    @ResponseBody
     private ModelAndView getHome() {
-
+//        this.revolutStockService.seedInDB("");
         objectList = new ArrayList<>();
 //        this.revolutStockService.saveStockPriceByDay("NIO","20");
         ModelAndView modelAndView = new ModelAndView("home");
@@ -39,6 +39,16 @@ public class HomeController {
         return modelAndView;
     }
 
+
+    @GetMapping("table")
+//    @ResponseBody
+    private ModelAndView getTable() {
+
+        ModelAndView modelAndView = new ModelAndView("tabletest");
+
+
+        return modelAndView;
+    }
 
 
 

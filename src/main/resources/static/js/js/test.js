@@ -62,7 +62,7 @@ function getStockAllPriceGoogle(data) {
 
         $.get("http://" + url + "/test/api/jsoup/" + valSelected.name, function (data, status) {
 
-
+            $.post("http://"+url+"/api/price/save",{name:name,price:data});
             let result = '<div id="' + name + '" class="card-' + name + '">' + data + '</div>';
             // let div = document.createElement("div").className = valSelected;
             let element = document.createElement("div");
@@ -84,11 +84,23 @@ function spliter(data, size = 80) {
         }
     }
     stockArrayBy80.push(temp_list);
-
-    // for (let i = 0; i <stockArrayBy80.length ; i++) {
-    //     setTimeout(function(){
-    //         alert(stockArrayBy80[i]);
-    //     }, 3000);
-    // }
-
 }
+
+
+    let globulCounter = 0;                     //  set your counter to 1
+
+    function myLoop () {           //  create a loop function
+        setTimeout(function () {    //  call a 3s setTimeout when the loop is called
+            console.log(globulCounter);          //  your code here
+
+            if (globulCounter < stockArrayBy80.length) {            //  if the counter < 10, call the loop function
+                getStockAllPriceGoogle(stockArrayBy80[globulCounter]);
+                myLoop();             //  ..  again which will trigger another
+            }                        //  ..  setTimeout()
+            globulCounter++;                     //  increment the counter
+        }, 3000)
+    }
+
+
+
+// $.get('https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=MSFT&apikey=demo',function(data){consol.log(data)})

@@ -67,14 +67,14 @@ function getPrice(price,range=0) {
     // console.log(inid );
      $.get("http://" + url + "/all/prices", function (data) {
 
-        // console.log(data)
+        console.log(data)
         for (let i = 0; i < data.length; i++) {
             if (data[i].price <= price && data[i].price >= range) {
                 filtered.push(data[i]);
 
             }
         }
-        // console.log(filtered);
+        console.log(filtered);
          tempReadAndPutByPrice(filtered);
         return filtered;
 
@@ -380,3 +380,4 @@ function renderFromlist(message, valueOfId) {
 
     document.querySelector("#output").appendChild(render);
 }
+

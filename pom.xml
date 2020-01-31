@@ -117,6 +117,11 @@
             <artifactId>htmlunit</artifactId>
             <version>2.36.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20180130</version>
+        </dependency>
 
     </dependencies>
 
@@ -133,3 +138,6 @@
 <!--     API https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=NIO&interval=5min&apikey=    49KXBTD3FBBZ3WL2 -my
 apikey=QYOWP5SXIHB6BV3X    P1CWMMTE0GLRFBYL '-->
 <!--  https://cloud.ibm.com/devops/pipelines/e808519c-eb78-420e-9c7f-8dc106507596?env_id=ibm:yp:eu-de      Key will be called:API Key for watson-stock-advisor-20200128122141559-->
+
+<!--https://api.worldtradingdata.com/api/v1/stock?symbol=SNAP,TWTR,VOD.L&api_token=Lr4LouGzqSulq4vdPjNMsn8DHGN6vFIp7txhlYYQQM7LXyWoq7i6KIdwixXP
+ my apky:  Lr4LouGzqSulq4vdPjNMsn8DHGN6vFIp7txhlYYQQM7LXyWoq7i6KIdwixXP-->

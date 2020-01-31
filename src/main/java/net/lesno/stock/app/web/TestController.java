@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -37,10 +38,20 @@ public class TestController {
     }
 
     @GetMapping("/test/htmlunit/{name}")
+    @ResponseBody
     private Object getTestPageHtmlUnitNasdaq(@PathVariable String name) {
 
 
-        return this.restApiService.getPostsPlainJSON();
+        return this.restApiService.getPostsAsObject(name);
+    }
+
+
+    @GetMapping("/test/apiLive/{name}")
+    @ResponseBody
+    private Object getLiveData(@PathVariable String name) {
+
+
+        return this.restApiService.liveStockApi(name);
     }
 
 }

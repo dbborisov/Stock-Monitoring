@@ -1,10 +1,10 @@
 package net.lesno.stock.services.services;
 
-import net.lesno.stock.entitys.model.RevolutStockListPrice;
-import net.lesno.stock.services.services.imp.Post;
+import net.lesno.stock.services.model.RevolutStockListPriceModel;
 
 public interface RestApiService {
     String getPostsPlainJSON(String symbol);
-    RevolutStockListPrice[] getPostsAsObject(String symbol);
-    Post getPostWithResponseHandling();
+    RevolutStockListPriceModel[] getPostsAsObject(String symbol);
+//    Data getPostWithResponseHandling();
+    String liveStockApi(String symbol);
 }

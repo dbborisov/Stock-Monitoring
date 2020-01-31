@@ -129,7 +129,7 @@ public class WebReadImpl implements WebReadService {
 
 
 
-    public void setTrustAllCerts() throws Exception {
+    public static void setTrustAllCerts() throws Exception {
         TrustManager[] trustAllCerts = new TrustManager[]{
                 new X509TrustManager() {
                     public java.security.cert.X509Certificate[] getAcceptedIssuers() {

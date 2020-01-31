@@ -18,7 +18,10 @@ public class RevolutStockList extends BaseModel {
     private String name;
      @Column(name = "full_name")
     private String fullName;
-
+    @Column(name = "price")
+    private String price;
+    @Column(name = "percentchange")
+    private String percentchange;
     @OneToMany(mappedBy = "id",targetEntity = RevolutStockListPrice.class,
             fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<RevolutStockListPrice> list;

@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 public class RevolutStockServiceImpl implements RevolutStockService {
@@ -92,8 +91,8 @@ public class RevolutStockServiceImpl implements RevolutStockService {
     }
 
     @Override
-    public List<StockNameAndPriceModel> allStokAndPrice() {
-        return this.price.findAll().stream().map(e -> this.modelMapper.map(e, StockNameAndPriceModel.class)).collect(Collectors.toList());
+    public List<RevolutStockList> allStokAndPrice() {
+        return this.stokListRepository.findAll();
     }
 
     public void saveStockPriceByDay(String stockName, String price) {
@@ -101,7 +100,7 @@ public class RevolutStockServiceImpl implements RevolutStockService {
         RevolutStockList stock = this.stokListRepository.findByName(stockName).get();
         RevolutStockListPrice stockUpdate = new RevolutStockListPrice();
         stockUpdate.setName(stock.getName());
-        stockUpdate.setFullName(stock.getFullName());
+//        stockUpdate.setFullName(stock.getFullName());
 //        stockUpdate.setPrice(price);
 
         System.out.println(stock.getName());

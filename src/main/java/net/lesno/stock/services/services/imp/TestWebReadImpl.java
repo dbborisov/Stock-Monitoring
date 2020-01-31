@@ -58,7 +58,7 @@ public class TestWebReadImpl implements TestWebRead {
         Document docCustomConn = null;
         try {
             setTrustAllCerts();
-            docCustomConn = Jsoup.connect("https://www.google.com/search?q=" + stockName + " price").followRedirects(true)
+            docCustomConn = Jsoup.connect("https://www.google.com/search?q=stock  price " + stockName).followRedirects(true)
                     .userAgent("Mozilla/5.0")
                     .timeout(5000).ignoreHttpErrors(true)
                     .get();
@@ -76,9 +76,12 @@ public class TestWebReadImpl implements TestWebRead {
 //        client.getOptions().setJavaScriptEnabled(true);
         HtmlPage page;
         client.getOptions().setUseInsecureSSL(true);
+        client.getOptions().setJavaScriptEnabled(false);
         try {
             setTrustAllCerts();
-            page = client.getPage("https://www.google.com/search?q=" + stockName + " stock price");
+
+//            page = client.getPage("https://www.google.com/search?q=" + stockName + " stock price");
+            page = client.getPage("https://old.nasdaq.com/symbol/NIO");
 
 
             return page.asXml();

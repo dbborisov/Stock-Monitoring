@@ -11,7 +11,7 @@ import javax.persistence.Table;
 import java.util.Calendar;
 
 @Entity
-@Table(name="revolute_stock_list_and_price")
+@Table(name = "revolute_stock_list_and_price")
 @Getter
 @Setter
 
@@ -21,10 +21,8 @@ public class RevolutStockListPrice extends BaseModel {
     }
 
 
-     @Column(name = "name")
+    @Column(name = "name")
     private String name;
-     @Column(name = "full_name")
-    private String fullName;
 
     @Column(name = "price_open")
     private String price_open;
@@ -42,5 +40,5 @@ public class RevolutStockListPrice extends BaseModel {
     private String low;
 
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", updatable = false)
-    private Calendar createdDate;
+    private String createdDate;
 }

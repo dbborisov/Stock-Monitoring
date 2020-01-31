@@ -1,7 +1,6 @@
 package net.lesno.stock.services.services;
 
 import net.lesno.stock.entitys.model.RevolutStockList;
-import net.lesno.stock.services.model.RevolutStockServiceModel;
 import net.lesno.stock.services.model.StockNameAndPriceModel;
 
 import java.util.List;
@@ -13,5 +12,5 @@ public interface RevolutStockService  {
     List<RevolutStockList> allStocksInRevolut();
     StockNameAndPriceModel allStokAndPriceUpdate(String name);
 
-    List<StockNameAndPriceModel> allStokAndPrice();
+    List<RevolutStockList> allStokAndPrice();
 }
