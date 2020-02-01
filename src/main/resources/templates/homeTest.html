@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>TestPage</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <!--                add angular application-->
+    <script type="text/javascript" src="../js/time.js"   th:src="@{/js/time.js}"></script>
+    <!--    <script type="text/javascript" src="../js/js/restCall.js"   th:src="@{/js/js/restCall.js}" onload="('api/stock_list')"></script>-->
+    <script type="text/javascript" src="../js/js/test.js"   th:src="@{/js/js/test.js}" onload="loadAllStockfromHost()"></script>
+
+</head>
+<body>
+
+<th:block th:include="fragments/nav"/>
+
+<audio id="myAudio">
+    <source th:src="@{/audio/Marimba-alert.mp3}" type="audio/mp3">
+
+    Your browser does not support the audio element.
+</audio>
+
+
+<div id="output" class="main-card row"></div>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    // let dbUrl =/*[[${view}]]*/ 'default';
+    urls =/*[[${view}]]*/ 'default';
+    /*]]>*/
+
+</script>
+<script>
+    function fatchtest() {
+        return fetch("http://localhost:8080/one/1")
+            .then(function (data) {
+                return data.json()// Here you get the data to modify as you please
+            })
+
+            .catch(function (error) {
+                alert("error " + error) // If there is any error you will catch them here
+            });
+    }
+
+
+</script>
+<script>
+    readDataFromHost(urls);
+    let x = document.getElementById('myAudio')
+</script>
+
+<!-- Footer -->
+<div class="row">
+    <footer class="footer text-right flex-grow-1">
+
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">© 2020 Copyright:
+            <a href="https://github.com/dbborisov"> Dobromir Borisov</a>
+        </div>
+        <!-- Copyright -->
+
+    </footer>
+
+</div>
+</body>
+</html>

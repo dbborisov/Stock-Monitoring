@@ -1,5 +1,61 @@
 let stock;
 let stockArrayBy80 = [];
+let stockArray = [];
+let test = "";
+
+
+//Get selected from the dropdown menu
+function addNewToList() {
+    let selected = document.querySelector("select");
+    let value = selected.options[selected.selectedIndex].value;
+    stockArray.push(value);
+    callToApiForStockDataAndSendToRender(value);
+}
+
+
+function callToApiForStockDataAndSendToRender(value) {
+    const url = window.location.host;
+
+    $.get("http://" + url + "/test/apiLive/" + value, function (data, status) {
+
+        test = JSON.parse(data);
+        let result = JSON.parse(data);
+        if (result.data.length > 1) {
+            for (let i = 0; i < result.data.length; i++) {
+                renderStockToWall(result.data[i]);
+            }
+        } else if (result.data.length === 1) {
+            renderStockToWall(result.data[0]);
+        }
+    });
+}
+
+//Adding a new stock to watch list on the page
+function renderStockToWall(data) {
+
+    let mainCard = document.createElement("div");
+    mainCard.className = "stock-" + data.symbol + " card";
+    let cardHeader = document.createElement("div");
+    cardHeader.className = "stock-cardheader card-header";
+    let cardBody = document.createElement("div");
+    cardBody.className = "stock-cardbody card-body";
+
+    let companyName = document.createElement("h3");
+    companyName.className = "company-" + data.symbol;
+    companyName.innerText = data.name;
+    let price = document.createElement("h2");
+    price.className = "price";
+    price.innerText = "$ " + data.price;
+
+
+    cardHeader.appendChild(companyName);
+    cardBody.appendChild(price);
+
+    mainCard.appendChild(cardHeader);
+    mainCard.appendChild(cardBody);
+    document.getElementById("output").appendChild(mainCard);
+
+}
 
 function loadAllStockfromHost() {
     const url = window.location.host;
@@ -17,10 +73,8 @@ function loadAllStockfromHost() {
     });
 }
 
+
 function revolutStockList(data) {
-
-    // console.log(url );
-
 
     data.forEach(function (dataKey) {
         let temp = document.createElement("option");
@@ -62,7 +116,7 @@ function getStockAllPriceGoogle(data) {
 
         $.get("http://" + url + "/test/api/jsoup/" + valSelected.name, function (data, status) {
 
-            $.post("http://"+url+"/api/price/save",{name:name,price:data});
+            $.post("http://" + url + "/api/price/save", {name: name, price: data});
             let result = '<div id="' + name + '" class="card-' + name + '">' + data + '</div>';
             // let div = document.createElement("div").className = valSelected;
             let element = document.createElement("div");
@@ -87,20 +141,35 @@ function spliter(data, size = 80) {
 }
 
 
-    let globulCounter = 0;                     //  set your counter to 1
+let globulCounter = 0;                     //  set your counter to 1
 
-    function myLoop () {           //  create a loop function
-        setTimeout(function () {    //  call a 3s setTimeout when the loop is called
-            console.log(globulCounter);          //  your code here
+function myLoop() {           //  create a loop function
+    setTimeout(function () {    //  call a 3s setTimeout when the loop is called
+        console.log(globulCounter);          //  your code here
 
-            if (globulCounter < stockArrayBy80.length) {            //  if the counter < 10, call the loop function
-                getStockAllPriceGoogle(stockArrayBy80[globulCounter]);
-                myLoop();             //  ..  again which will trigger another
-            }                        //  ..  setTimeout()
-            globulCounter++;                     //  increment the counter
-        }, 3000)
-    }
+        if (globulCounter < stockArrayBy80.length) {            //  if the counter < 10, call the loop function
+            getStockAllPriceGoogle(stockArrayBy80[globulCounter]);
+            myLoop();             //  ..  again which will trigger another
+        }                        //  ..  setTimeout()
+        globulCounter++;                     //  increment the counter
+    }, 3000)
+}
 
+let isTrue = false;
+
+function stockReload() {
+        //  create a loop function
+    setTimeout(function () {    //  call a 3s setTimeout when the loop is called
+
+        if (isTrue) {            //  if the counter < 10, call the loop function
+
+            callToApiForStockDataAndSendToRender(stockArray.join());
+
+            stockReload();             //  ..  again which will trigger another
+        }                        //  ..  setTimeout()
+
+    }, 3000)
+}
 
 
 // $.get('https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=MSFT&apikey=demo',function(data){consol.log(data)})

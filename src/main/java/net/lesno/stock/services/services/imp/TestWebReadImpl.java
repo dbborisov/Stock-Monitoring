@@ -4,11 +4,8 @@ import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import net.lesno.stock.entitys.model.RevolutStockList;
-import net.lesno.stock.entitys.model.TestList;
-import net.lesno.stock.entitys.model.TestStockName;
 import net.lesno.stock.entitys.repository.RevolutStokListPriceRepository;
 import net.lesno.stock.entitys.repository.RevolutStokListRepository;
-import net.lesno.stock.entitys.repository.TestStockNameRepository;
 import net.lesno.stock.services.services.TestWebRead;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -17,20 +14,19 @@ import org.springframework.stereotype.Service;
 
 import javax.net.ssl.*;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TestWebReadImpl implements TestWebRead {
     private final RevolutStokListRepository StockListRepository;
     private final RevolutStokListPriceRepository StockPriceRepository;
-    private final TestStockNameRepository testStockNameRepository;
+
 
 
     @Autowired
-    public TestWebReadImpl(RevolutStokListRepository stockListRepository, RevolutStokListPriceRepository stockPriceRepository, TestStockNameRepository testStockNameRepository) {
+    public TestWebReadImpl(RevolutStokListRepository stockListRepository, RevolutStokListPriceRepository stockPriceRepository) {
         StockListRepository = stockListRepository;
         StockPriceRepository = stockPriceRepository;
-        this.testStockNameRepository = testStockNameRepository;
+
     }
 
 
@@ -137,34 +133,6 @@ public class TestWebReadImpl implements TestWebRead {
         return this.StockListRepository.findAll();
     }
 
-    public void makeTest(){
-
-        TestStockName name = new TestStockName();
-        TestStockName name1 = this.testStockNameRepository.getByName("pepi").orElse(null);
-        List<TestList> list;
-        TestList toName = new TestList();
-        name.setName("pepi");
-        toName.setName(name.getName());
-        toName.setPrice_open("2.5");
-        toName.setPrice_close("2.3");
-
-        if(name1 == null){
-        name.setFullName("Pesho");
-        name.setName("pepi");
-            list = name.getList();
-            list.add(toName);
-            this.testStockNameRepository.save(name);
-        }else{
-           toName.setName(name1.getName());
-           name1.getList().add(toName);
-            this.testStockNameRepository.save(name1);
-        }
-
-
-        testStockNameRepository.flush();
-
-
-    }
 
 
     public void setTrustAllCerts() throws Exception {

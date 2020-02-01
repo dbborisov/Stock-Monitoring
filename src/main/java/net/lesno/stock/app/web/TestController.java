@@ -31,7 +31,7 @@ public class TestController {
     }
     @GetMapping("/test/jsoup/")
     private Object testPage() {
-        this.testWebRead.makeTest();
+
         ModelAndView modelAndView = new ModelAndView("testPage");
 
         return modelAndView;
@@ -53,5 +53,7 @@ public class TestController {
 
         return this.restApiService.liveStockApi(name);
     }
+
+
 
 }

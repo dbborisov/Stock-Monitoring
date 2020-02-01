@@ -16,5 +16,5 @@ public interface TestWebRead {
     String htmlUtilGoogleSearch(String stockName);
 
     String htmlUtilGoogleSearchOnlyStock(String stockName);
-    void makeTest();
+
 }

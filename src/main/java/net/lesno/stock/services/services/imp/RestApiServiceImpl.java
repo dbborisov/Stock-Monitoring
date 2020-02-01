@@ -86,8 +86,6 @@ public class RestApiServiceImpl implements RestApiService {
             stock.getList().add(tempStock);
             }
 
-
-
         }
         this.stokListRepository.save(stock);
 //        ObjectMapper objectMapper = new ObjectMapper();
