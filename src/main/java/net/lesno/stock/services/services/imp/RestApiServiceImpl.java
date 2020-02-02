@@ -17,6 +17,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.time.Duration;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -133,6 +134,43 @@ public class RestApiServiceImpl implements RestApiService {
 
         return jsonString;
 
+    }
+
+    public List<RevolutStockList> findAllStockNames(String symbol){
+
+        return this.stokListRepository.findAll();
+    }
+
+    public JSONObject setPricesToStock(String symbols){
+
+        String apyKey = "Lr4LouGzqSulq4vdPjNMsn8DHGN6vFIp7txhlYYQQM7LXyWoq7i6KIdwixXP";
+        String url = "https://api.worldtradingdata.com/api/v1/stock?symbol="+symbols+"&api_token="+apyKey;
+
+
+        String jsonString = this.restTemplate.getForObject(url, String.class);
+        JSONObject jsonObject = new JSONObject(jsonString);
+        MetaData header = null;
+
+        try {
+            header = new ObjectMapper().readValue(jsonString, MetaData.class);
+        } catch (JsonProcessingException ex) {
+            ex.printStackTrace();
+        }
+
+        int size = header.data.size();
+        for (int i = 0; i < size; i++) {
+            Data data = header.data.get(i);
+            RevolutStockList stockFroDB = this.stokListRepository.findByName(data.symbol).get(); //todo this  if new stock just add
+
+            stockFroDB.setPrice(data.price);
+            stockFroDB.setPercentchange(data.change_pct);
+
+            stockFroDB.setLastUpdate(Calendar.getInstance());
+            this.stokListRepository.save(stockFroDB);
+            System.out.println(stockFroDB);
+        }
+
+        return jsonObject;
     }
 
 }
