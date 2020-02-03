@@ -85,7 +85,6 @@ function revolutStockList(data) {
     });
     // .querySelector("#"+id).innerHTML = data.response;
     // alert("Data: " + data.response + "\nStatus: " + status);
-
 }
 
 function getStockPriceGoogle() {

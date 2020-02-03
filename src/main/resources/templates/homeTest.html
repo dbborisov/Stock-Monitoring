@@ -8,71 +8,180 @@
     <meta charset="UTF-8">
     <title>TestPage</title>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <script
             src="https://code.jquery.com/jquery-3.4.1.min.js"
             integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
             crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
     <!--                add angular application-->
-    <script type="text/javascript" src="../js/time.js"   th:src="@{/js/time.js}"></script>
+    <script type="text/javascript" src="../js/time.js" th:src="@{/js/time.js}"></script>
     <!--    <script type="text/javascript" src="../js/js/restCall.js"   th:src="@{/js/js/restCall.js}" onload="('api/stock_list')"></script>-->
-    <script type="text/javascript" src="../js/js/test.js"   th:src="@{/js/js/test.js}" onload="loadAllStockfromHost()"></script>
+    <script type="text/javascript" src="../js/js/test.js" th:src="@{/js/js/test.js}"
+            onload="loadAllStockfromHost()"></script>
+    <link rel="stylesheet" href="css/main.css">
 
 </head>
 <body>
+<div class="container">
+    <th:block th:include="fragments/nav"/>
 
-<th:block th:include="fragments/nav"/>
+    <audio id="myAudio">
+        <source th:src="@{/audio/Marimba-alert.mp3}" type="audio/mp3">
 
-<audio id="myAudio">
-    <source th:src="@{/audio/Marimba-alert.mp3}" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
 
-    Your browser does not support the audio element.
-</audio>
-
-
-<div id="output" class="main-card row"></div>
-
-<script th:inline="javascript">
-    /*<![CDATA[*/
-    // let dbUrl =/*[[${view}]]*/ 'default';
-    urls =/*[[${view}]]*/ 'default';
-    /*]]>*/
-
-</script>
-<script>
-    function fatchtest() {
-        return fetch("http://localhost:8080/one/1")
-            .then(function (data) {
-                return data.json()// Here you get the data to modify as you please
-            })
-
-            .catch(function (error) {
-                alert("error " + error) // If there is any error you will catch them here
-            });
-    }
+    <div id="test-id " class="row">
 
 
-</script>
-<script>
-    readDataFromHost(urls);
-    let x = document.getElementById('myAudio')
-</script>
+        <div id="accordion-4" class="col-lg-3 col-sm-3">
+            <div class="card ">
 
-<!-- Footer -->
-<div class="row">
-    <footer class="footer text-right flex-grow-1">
+                <div class="card-header bg-info row " id="headingPS">
 
-        <!-- Copyright -->
-        <div class="footer-copyright text-center py-3">© 2020 Copyright:
-            <a href="https://github.com/dbborisov"> Dobromir Borisov</a>
+                    <button class="btn btn-primary " data-toggle="collapse" data-target="#collapsePS"
+                            aria-expanded="true"
+                            aria-controls="collapsePS">
+                        <span>OPKTOR</span>
+                        <span>Price $6000.20</span>
+                    </button>
+                </div>
+
+                <div id="collapsePS" class="collapse hide" aria-labelledby="headingPS" data-parent="#accordion-4">
+                    <div class="card-body">
+                        <p>
+                            <span>Last Update </span><span>2020-02-03 10:30</span>
+                        </p>
+                        <p>
+                            <span>Volume </span><span> 82172700</span>
+                        </p>
+                        <p>Price high: <span>170.3600</span></p>
+                        <p>Price low: <span>170.0100</span></p>
+                        <p>Price close: <span>170.2632</span></p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <!-- Copyright -->
 
-    </footer>
+    </div>
 
+
+    <script>
+
+        function LoadAllStocksFromServerSide() {
+            const url = window.location.host;
+
+            $.get("http://" + url + "/all/prices", function (data) {
+                // console.log(data[0].name);
+                for (let i = 0; i < data.length; i++) {
+                    renderToWall(data[i]);
+                }
+
+            })
+        }
+
+        function renderToWall(data) {
+            let frame = document.createElement("div");
+            frame.className = "col-lg-3 col-sm-3";
+            frame.id = "frame-" + data.name;
+            let mainCard = document.createElement("div");
+            mainCard.className = "card";
+
+            let cardHead = document.createElement("div");
+            cardHead.className = "card-header bg-info row";
+            cardHead.id = "card-header-" + data.name;
+
+            let buttonHead = document.createElement("button");
+            buttonHead.className = "btn btn-primary rounded-left";
+            buttonHead.setAttribute("data-toggle", "collapse");
+            buttonHead.setAttribute("data-target", "#collapse" + data.name);
+            buttonHead.setAttribute("aria-expanded", "true");
+            buttonHead.setAttribute("aria-controls", "collapse" + data.name);
+            buttonHead.innerHTML = '<span>' + data.name + '</span>' + '<span> Price $' + data.price + '</span>';
+
+            cardHead.appendChild(buttonHead);
+            mainCard.appendChild(cardHead);
+
+            let collapsibleBody = document.createElement("div");
+            collapsibleBody.id = "collapse" + data.name;
+            collapsibleBody.className = "collapse hide";
+            collapsibleBody.setAttribute("aria-labelledby", "heading" + data.name);
+            collapsibleBody.setAttribute("data-parent", "#frame-" + data.name);
+
+            let cardBody = document.createElement("div");
+            cardBody.lassName = "card-header bg-info row";
+            cardBody.id = "card-header-" + data.name;
+            cardBody.innerHTML = '            <span>Full Name : </span><span> ' + data.fullName + '</span>\n' +
+                '            </p>\n' +
+
+                '                <span>Last Update: </span><p>' + new Date( data.lastUpdate).toLocaleString()+'</p>\n' +
+
+                '            <p>\n' +
+                '            <span>Percent Change: </span><span> ' + data.percentchange + '</span>\n' +
+                '            </p>\n' + ' <p>\n' ;
+
+
+                collapsibleBody.appendChild(cardBody);
+            mainCard.appendChild(collapsibleBody);
+            frame.appendChild(mainCard);
+
+            document.querySelector("#output").appendChild(frame);
+
+        }
+    </script>
+
+    <div id="output" class="main-card row">
+
+    </div>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        // let dbUrl =/*[[${view}]]*/ 'default';
+        urls =/*[[${view}]]*/ 'default';
+        /*]]>*/
+
+    </script>
+    <script>
+        function fatchtest() {
+            return fetch("http://localhost:8080/one/1")
+                .then(function (data) {
+                    return data.json()// Here you get the data to modify as you please
+                })
+
+                .catch(function (error) {
+                    alert("error " + error) // If there is any error you will catch them here
+                });
+        }
+
+
+    </script>
+    <script>
+        // readDataFromHost(urls);
+        let x = document.getElementById('myAudio')
+        LoadAllStocksFromServerSide();
+    </script>
+
+    <!-- Footer -->
+    <div class="row">
+        <footer class="footer text-right flex-grow-1">
+
+            <!-- Copyright -->
+            <div class="footer-copyright text-center py-3">© 2020 Copyright:
+                <a href="https://github.com/dbborisov"> Dobromir Borisov</a>
+            </div>
+            <!-- Copyright -->
+
+        </footer>
+
+    </div>
 </div>
 </body>
 </html>

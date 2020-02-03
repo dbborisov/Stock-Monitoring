@@ -6,71 +6,39 @@
 <th:block th:include=" fragments/head"/>
 
 <body onload="getStockSymbols()">
-<script>
-    let symbols = [];
-    let fullData = [];
 
 
-    function getStockSymbols() {
-        const url = window.location.host;
-        $.get("http://" + url + "/test/api/jsoup/all/", function (data) {
-            console.log(data[0].name);
-            for (let i = 0; i < data.length; i++) {
-                fullData.push(data[i]);
-                renderOnTable(data[i]);
-                symbols.push(data[i].name);
-            }
-            $(document).ready(function () {
-                $('#dtBasicExample').DataTable();
-                $('.dataTables_length').addClass('bs-select');
-            });
-        })
-    }
-
-
-    function renderOnTable(data) {
-
-        let tableTR = document.createElement("tr");
-
-        tableTR.innerHTML =
-            '<td>' + data.id + '</td>' +
-            '<td>' + data.fullName + '</td>' +
-            '<td>' + data.name + '</td>' +
-            '<td>' + data.lastUpdate + '</td>' +
-            '<td>' + data.percentchange + '</td>' +
-            '<td>' + data.price + '</td>';
-
-        let body = document.querySelector("tbody");
-        body.appendChild(tableTR);
-
-    }
-
-    let namesSplit = [];
-
-    function splitName(data, size = 4) {
-        let temp_list = [];
-        for (let i = 0; i < data.length; i++) {
-            temp_list.push(data[i])
-            if (i % size === 0 && i !== 0) {
-                namesSplit.push(temp_list);
-                temp_list = [];
-            }
-        }
-        namesSplit.push(temp_list);
-    }
-
-    function UPDATE_SOTCK_PRICES(names) {
-        const url = window.location.host;
-        let namesString = names.join();
-        $.get("http://" + url + "/test/api/setNewPrices/" + namesString, function (data) {
-            console.log(data)
-        })
-    }
-</script>
 
 <div class="container">
+<!-- Update button-->
+<div>
+
+    <button id="updateBtn" class="btn btn-primary" onclick="updateBtn()">Update All Data</button>
+    <label id="labelBtn"></label>
+</div>
+
+<!--price input and button-->
+<div class = "row col-lg-6">
+
+    <button  id="byPriceBtn" class="btn btn-primary col-lg-5" onclick="getBtnPrices()">Filter By Price</button>
+    <div class="row col-3">
+        <label>from price</label><input id="from" type="number" min="1" max="5">
+    </div>
+    <div class="row col-3">
+        <label>less then</label><input id="to_price" type="number" min="1" max="5">
+    </div>
+    <script>function getBtnPrices(){
+        let toPrice = document.querySelector("#to_price").value;
+       let fromPrice =  document.querySelector("#from").value;
+       getPrice((fromPrice*1.00),(toPrice*1.00));
+    }
+    </script>
+    </div>
+
+
+
     <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
-        <thead>
+        <thead  class="black white-text">
         <tr>
             <th class="th-sm">Internal Id
             </th>
@@ -88,7 +56,7 @@
         </tr>
         </thead>
         <tbody>
-       <script onload="getStockSymbols()"></script>
+
 
 
         </tbody>
@@ -110,26 +78,195 @@
         </tfoot>
     </table>
 </div>
+<div id="outPrice"></div>
+
+<script>
+    let symbols = [];
+    let fullData = [];
+    // master updateStockAndPrice function
+    function updateBtn() {
+        splitName(symbols, 4);
+        myLoop();
+    }
+
+    // call server side for all data with prices
+    function getStockSymbols() {
+        const url = window.location.host;
+        $.get("http://" + url + "/all/prices", function (data) {
+            // console.log(data[0].name);
+            for (let i = 0; i < data.length; i++) {
+                fullData.push(data[i]);
+                renderOnTable(data[i]);
+                symbols.push(data[i].name);
+            }
+            // render pagenation and search function and split for paging
+            $(document).ready(function () {
+                $('#dtBasicExample').DataTable();
+                $('.dataTables_length').addClass('bs-select');
+            });
+        })
+    }
+
+
+    function renderOnTable(data) {
+
+        let tableTR = document.createElement("tr");
+
+        tableTR.innerHTML =
+            '<td>' + data.id + '</td>' +
+            '<td>' + data.fullName + '</td>' +
+            '<td>' + data.name + '</td>' +
+            '<td>' + new Date(data.lastUpdate).toLocaleString() + '</td>' +
+            '<td>' + data.percentchange + '</td>' +
+            '<td>' + data.price + '</td>';
+
+        let body = document.querySelector("tbody");
+        body.appendChild(tableTR);
+
+    }
+
+    let namesSplit = [];
+
+    // split all stock names to pack of 5 in array
+    function splitName(data, size = 4) {
+        let temp_list = [];
+        for (let i = 0; i < data.length; i++) {
+            temp_list.push(data[i])
+            if (i % size === 0 && i !== 0) {
+                namesSplit.push(temp_list);
+                temp_list = [];
+            }
+        }
+        namesSplit.push(temp_list);
+    }
+
+    // server side update data for stock prices
+    function UPDATE_SOTCK_PRICES(names) {
+        const url = window.location.host;
+        let namesString = names.join();
+        $.get("http://" + url + "/test/api/setNewPrices/" + namesString, function (data) {
+            // console.log(data)
+        })
+    }
+</script>
+
+
 
 
 <script>
-    let globulCounter = 10;                     //  set your counter to 1
+    let globulCounter = 193;                     //  set your counter to 1
 
     function myLoop() {           //  create a loop function
         setTimeout(function () {    //  call a 3s setTimeout when the loop is called
-            console.log(globulCounter);          //  your code here
+            // console.log(globulCounter);          //  your code here
 
-            if (globulCounter < (namesSplit.length -1)) {            //  if the counter < 10, call the loop function
+            if (globulCounter < (namesSplit.length - 1)) {            //  if the counter < 10, call the loop function
                 UPDATE_SOTCK_PRICES(namesSplit[globulCounter]);
-                console.log(namesSplit[globulCounter])
+
+                document.querySelector("#labelBtn").textContent = "updating list ... " + namesSplit[globulCounter];
                 myLoop();             //  ..  again which will trigger another
-            }                        //  ..  setTimeout()
+            } else {
+                globulCounter = 0
+                document.querySelector("#labelBtn").textContent = "";
+                return;
+            }
             globulCounter++;                     //  increment the counter
-        }, 1000)
+        }, 1000)   //  ..  setTimeout()
+    }
+
+</script>
+<script>
+
+    // get prices by reang given and render to table and delete the old one
+    function getPrice(price,range=0) {
+        const url = window.location.host;
+        // console.log(price,range);
+        let filtered = [];
+        // console.log(inid );
+        $.get("http://" + url + "/all/prices", function (data) {
+
+            // console.log(data)
+            for (let i = 0; i < data.length; i++) {
+                if (data[i].price <= price && data[i].price >= range) {
+                    filtered.push(data[i]);
+
+                }
+            }
+            let main = document.querySelector("#dtBasicExample_wrapper");
+            if (main!=null){
+                main.remove();
+            }
+            let check = document.querySelector("#dtPrice_wrapper");
+            if(check!=null){
+                check.remove();
+            }
+            document.querySelector("#outPrice").innerHTML+="<div class=\"container\">\n" +
+                "    <table id=\"dtPrice\" class=\"table table-striped table-bordered table-sm\" cellspacing=\"0\" width=\"100%\">\n" +
+                "        <thead  class=\"black white-text\">\n" +
+                "        <tr>\n" +
+                "            <th class=\"th-sm\">Internal Id\n" +
+                "            </th>\n" +
+                "            <th class=\"th-sm\">Company Name\n" +
+                "            </th>\n" +
+                "            <th class=\"th-sm\">Stock Name\n" +
+                "            </th>\n" +
+                "            <th class=\"th-sm\">Last Update\n" +
+                "            </th>\n" +
+                "            <th class=\"th-sm\">Percent Difference\n" +
+                "            </th>\n" +
+                "            <th class=\"th-sm\">Price\n" +
+                "            </th>\n" +
+                "\n" +
+                "        </tr>\n" +
+                "        </thead>\n" +
+                "        <tbody id='price'>\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "        </tbody>\n" +
+                "        <tfoot>\n" +
+                "        <tr>\n" +
+                "            <th>Internal Id\n" +
+                "            </th>\n" +
+                "            <th>Company Name\n" +
+                "            </th>\n" +
+                "            <th>Stock Name\n" +
+                "            </th>\n" +
+                "            <th>Last Update\n" +
+                "            </th>\n" +
+                "            <th>Percent Difference\n" +
+                "            </th>\n" +
+                "            <th>Price\n" +
+                "            </th>\n" +
+                "        </tr>\n" +
+                "        </tfoot>\n" +
+                "    </table>\n" +
+                "</div>"
+            for (let i = 0; i < filtered.length; i++) {
+
+                let tableTR = document.createElement("tr");
+                tableTR.innerHTML =
+                    '<td>' + filtered[i].id + '</td>' +
+                    '<td>' + filtered[i].fullName + '</td>' +
+                    '<td>' + filtered[i].name + '</td>' +
+                    '<td>' + filtered[i].lastUpdate + '</td>' +
+                    '<td>' + filtered[i].percentchange + '</td>' +
+                    '<td>' + filtered[i].price + '</td>';
+                document.querySelector("#price").appendChild(tableTR);
+            }
+            $(document).ready(function () {
+                $('#dtPrice').DataTable();
+                $('.dataTables_length').addClass('bs-select');
+            });
+
+
+        });
+
+
     }
 
 </script>
 
-
+<th:block th:include="fragments/footer"/>
 </body>
 </html>
